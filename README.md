@@ -20,7 +20,8 @@ Open Source Bike Plattform with ANT+, CAN, Bluetooth, Power Delivery and more to
 ## Don't reinvent the Wheel - Stuff that exists that can be integrated
 ### Hardware
 #### Products
-- Bikone BB Torque Sensor (BSA) for Power, Crank Position
+- [Bikone BB Torque Sensor (BSA)](https://www.bikone.com/bottombracket-torque-sensors/)
+  - Power, Crank Position
   - Rohloff Hub gears should be shifted when under low power
   - Sensor would be ideal to determine bottom-out
   - Super hard / impossible to build a better solution DIY
