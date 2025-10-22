@@ -20,14 +20,20 @@ Open Source Bike Plattform with ANT+, CAN, Bluetooth, Power Delivery and more to
 
 ## Don't reinvent the Wheel - Stuff that exists that can be integrated
 ### Hardware
-#### Products
-- [Bikone BB Torque Sensor (BSA)](https://www.bikone.com/bottombracket-torque-sensors/)
+#### [Mecha Comet](https://mecha.so/comet)
+Linux Handheld with Touchscreen
+#### [Bikone BB Torque Sensor (BSA)](https://www.bikone.com/bottombracket-torque-sensors/)
   - Power, Crank Position
   - Rohloff Hub gears should be shifted when under low power
   - Sensor would be ideal to determine bottom-out
   - Super hard / impossible to build a better solution DIY
-- [Forumslader Aheadlader V6](https://www.forumslader.de/aheadlader-v6/)
+#### [Forumslader Aheadlader V6](https://www.forumslader.de/aheadlader-v6/)
   - Powerbank with Hub Dynamo Charger
   - Delivers 5 and 12V
   - Can be charged externally
   - Power Lights, Phones/Bike Computers and Shifters
+
+### Software
+#### [Zephyr Project](https://github.com/zephyrproject-rtos/zephyr)
+Real Time Operation System (RTOS) to programm the Microcontroller
+#### [Pi Zero Bike Computer](https://github.com/hishizuka/pizero_bikecomputer)
