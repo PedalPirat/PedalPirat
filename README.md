@@ -79,7 +79,7 @@ Linux Handheld with Touchscreen
 - [u-blox MAX-M10S GPS](https://www.u-blox.com/en/product/max-m10-series)
 - [Bosch BHI385 Smart Sensor](https://www.bosch-sensortec.com/products/smart-sensor-systems/bhi385/)
 - [Ti USB-PD Powerbank Eval Board](https://www.ti.com/tool/USB-PD-CHG-EVM-01)
-- [MPS Powerbank Eval Board[(https://www.monolithicpower.com/en/mezs7-1s-4spdpowerbank-reference-design)
+- [MPS Powerbank Eval Board](https://www.monolithicpower.com/en/mezs7-1s-4spdpowerbank-reference-design)
 - Rotary Sensor
 
 ##### Other
