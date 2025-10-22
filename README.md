@@ -34,6 +34,13 @@ Linux Handheld with Touchscreen
   - Can be charged externally
   - Power Lights, Phones/Bike Computers and Shifters
 
+#### Components
+- [Melexis LED Controller](https://www.melexis.com/en/products/smart-led-driver-ics)
+- [Lumissil LIN Controller](https://www.lumissil.com/applications/automotive/automotive-lighting/interior-lighting/is32cs8978)
+- [u-blox MAX-M10S GPS](https://www.u-blox.com/en/product/max-m10-series)
+- [Bosch BHI385 Smart Sensor](https://www.bosch-sensortec.com/products/smart-sensor-systems/bhi385/)
+- Rotary Sensor
+- 
 ### Software
 #### [Zephyr Project](https://github.com/zephyrproject-rtos/zephyr)
 Real Time Operation System (RTOS) to programm the Microcontroller
