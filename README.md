@@ -25,3 +25,8 @@ Open Source Bike Plattform with ANT+, CAN, Bluetooth, Power Delivery and more to
   - Rohloff Hub gears should be shifted when under low power
   - Sensor would be ideal to determine bottom-out
   - Super hard / impossible to build a better solution DIY
+- [Forumslader Aheadlader V6](Aheadlader V6)
+  - Powerbank with Hub Dynamo Charger
+  - Delivers 5 and 12V
+  - Can be charged externally
+  - Power Lights, Phones/Bike Computers and Shifters
