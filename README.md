@@ -23,18 +23,22 @@ Open Source Bike Plattform with ANT+, CAN, Bluetooth, Power Delivery and more to
 ### Hardware
 #### [Mecha Comet](https://mecha.so/comet)
 Linux Handheld with Touchscreen
-#### [Bikone BB Torque Sensor (BSA)](https://www.bikone.com/bottombracket-torque-sensors/)
+#### Bike Components
+##### [Bikone BB Torque Sensor (BSA)](https://www.bikone.com/bottombracket-torque-sensors/)
   - Power, Crank Position
   - Rohloff Hub gears should be shifted when under low power
   - Sensor would be ideal to determine bottom-out
   - Super hard / impossible to build a better solution DIY
-#### [Forumslader Aheadlader V6](https://www.forumslader.de/aheadlader-v6/)
+##### [Forumslader Aheadlader V6](https://www.forumslader.de/aheadlader-v6/)
   - Powerbank with Hub Dynamo Charger
   - Delivers 5 and 12V
   - Can be charged externally
   - Power Lights, Phones/Bike Computers and Shifters
 
-#### Components
+##### [Rohloff E-14](https://www.rohloff.de/en/products/speedhub/e-14)
+
+#### Electronic Components
+- [Nordic Semi nRF54H20 MCU](https://www.nordicsemi.com/Products/nRF54H20)
 - [Melexis LED Controller](https://www.melexis.com/en/products/smart-led-driver-ics)
 - [Lumissil LIN Controller](https://www.lumissil.com/applications/automotive/automotive-lighting/interior-lighting/is32cs8978)
 - [u-blox MAX-M10S GPS](https://www.u-blox.com/en/product/max-m10-series)
