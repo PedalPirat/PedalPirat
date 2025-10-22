@@ -6,6 +6,7 @@ Open Source Bike Plattform with ANT+, CAN, Bluetooth, Power Delivery and more to
 - Make stuff work together vendor-independent (Shimano levers with SRAM AXS anyone?)
 - Enhance Security with light control, Radars and Cameras using AI
 - Integrate E-Bike Technology for Bio-Bikes like the Rohloff E-14
+- Automate shifting and reporting cars that park on bike paths
 - Fun (Heated Handlebar Tape ftw!)
 - Data Fusion and Logging
 
