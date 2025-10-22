@@ -1,5 +1,6 @@
 # PedalPirat
 Open Source Bike Plattform with ANT+, CAN, Bluetooth, Power Delivery and more to build the ultimative Smart Bike.
+<img width="1566" height="1265" alt="PedalPiratController drawio" src="https://github.com/user-attachments/assets/2458d0eb-bdfa-4f51-bcc0-adbd5806303d" />
 
 ## Goals
 - Replace proprietary batteries with a central Powerbank that can optionally be charged by a hub dynamo
