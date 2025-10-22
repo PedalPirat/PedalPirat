@@ -1,1 +1,26 @@
 # PedalPirat
+Open Source Bike Plattform with ANT+, CAN, Bluetooth, Power Delivery and more to build the ultimative Smart Bike.
+
+## Goals
+- Replace proprietary batteries with a central Powerbank that can optionally be charged by a hub dynamo
+- Make stuff work together vendor-independent (Shimano levers with SRAM AXS anyone?)
+- Enhance Security with light control, Radars and Cameras using AI
+- Integrate E-Bike Technology for Bio-Bikes like the Rohloff E-14
+- Fun (Heated Handlebar Tape ftw!)
+- Data Fusion and Logging
+
+## Integrations (for now)
+- Rohloff E-14 (CAN)
+- Shimano GRX Di2 wired Levers (CAN/Contact?)
+- ANT+ (Quarq TyreWiz 2.0, Quarq DZero DUB, RockShox Reverb AXS, HR-Belt, maybe more?)
+
+## Custom Hardware
+
+
+## Don't reinvent the Wheel - Stuff that exists that can be integrated
+### Hardware
+#### Products
+- Bikone BB Torque Sensor (BSA) for Power, Crank Position
+  - Rohloff Hub gears should be shifted when under low power
+  - Sensor would be ideal to determine bottom-out
+  - Super hard / impossible to build a better solution DIY
