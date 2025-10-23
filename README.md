@@ -1,5 +1,5 @@
 # PedalPirat
-Open Source Bike Plattform with ANT+, CAN, Bluetooth, Power Delivery and more to build the ultimative Smart Bike.
+Open Source Bike Plattform with ANT+, CAN, Bluetooth, AI Cameras and more to build the ultimative Smart Bike.
 ![PedalPirat](PedalPiratController.drawio.png)
 
 ## Goals
