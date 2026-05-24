@@ -51,6 +51,12 @@ graph TD
         FRONT -.->|ANT+| REVERB[RockShox Reverb AXS]
     end
 
+    subgraph BLE["BLE Devices"]
+        FL -.->|BLE UART| FRONT
+        FRONT -.->|BLE GATT| PHONE[Phone App<br/>iOS/Android]
+        FRONT -.->|BLE CSC/HR/CP| BLE_S[BLE Sensors]
+    end
+
     subgraph Future
         COMET <-->|USB-C| CAM[E2IP Edge AI Camera<br/>STM32N657 + Sony 5MP + ToF]
     end
@@ -68,6 +74,9 @@ graph LR
     PP --> ANT[pp-ant-profiles<br/>ANT+ Device Integration]
     PP --> PLAN[pp-planning<br/>Planning & Research]
     PP --> BRIDGE[pp-shift-bridge<br/>Standalone Shifter Bridge]
+    PP --> BLE_SPEC[pp-ble-spec<br/>BLE Protocol Spec]
+    PP --> APP[pp-app<br/>Phone App]
+    PP --> FLCOMP[Forumslader-Companion<br/>Garmin Connect IQ]
 
     PP -.-> RES[RES-ANT<br/>ANT+ Reference Docs]
     PP -.-> OA[openant<br/>Python ANT+ Library]
@@ -83,6 +92,9 @@ graph LR
 | [`pp-ant-profiles`](../pp-ant-profiles/) | ANT+ device profiles — standard & reverse-engineered (SRAM, Reverb, Varia) |
 | [`pp-planning`](../pp-planning/) | Planning, research notes, outreach drafts, session logs |
 | [`pp-shift-bridge`](../pp-shift-bridge/) | Standalone ANT+ shifter → Rohloff E-14 / Pinion Smart.Shift bridge |
+| [`pp-ble-spec`](../pp-ble-spec/) | BLE protocol — cycling profiles, custom GATT service, phone app architecture |
+| [`pp-app`](../pp-app/) | Smartphone companion app (BLE) — Flutter/RN, iOS + Android |
+| [`Forumslader-Companion`](../Forumslader-Companion/) | Garmin Connect IQ app for Forumslader (fork) |
 | [`RES-ANT`](../RES-ANT/) | ANT+ reference material — official specs, SDKs, tools |
 | [`openant`](../openant/) | Python ANT+ library — USB stick testing & development |
 
@@ -106,18 +118,41 @@ graph LR
         R <-->|CAN/UART| PM[Powermeter]
     end
 
-    subgraph I2C_Local ["I2C (local)"]
+    subgraph I2C_Local ["I2C (handlebar)"]
         F --- LP_F[LP5036 Front LEDs]
         F --- GPS2[MAX-M10S GPS]
         F --- IMU2[BHI385 IMU]
+        F --- BTN_L[MCP23017 Left Buttons]
+        F --- BTN_R[MCP23017 Right Buttons]
         R --- LP_R[LP5036 Rear LEDs]
     end
 
-    subgraph USB_Connections ["USB"]
-        F <-->|USB CDC ACM0<br/>NMEA GPS| COMET2[Mecha Comet]
-        F <-->|USB CDC ACM1<br/>PP Protocol| COMET2
+    subgraph USB_Connections ["USB (to Mecha Comet)"]
+        F <-->|CDC ACM0 · NMEA GPS| COMET2[Mecha Comet]
+        F <-->|CDC ACM1 · PP Protocol| COMET2
+        F <-->|CDC ACM2 · SLCAN| COMET2
         COMET2 <-->|USB-C| CAM2[AI Camera]
         COMET2 -->|mcumgr DFU| F
+    end
+
+    subgraph BLE_Connections ["BLE (wireless)"]
+        F <-.->|BLE UART| FL6[Forumslader V6<br/>Power · Speed · Battery]
+        F <-.->|BLE GATT| PHONE[Phone App<br/>Display · Control]
+        F <-.->|BLE CSC/CP/HR| BLE_SENS[BLE Sensors]
+    end
+
+    subgraph ANT_Connections ["ANT+ (wireless sensors)"]
+        F <-.->|ANT+ Shifting| SRAM2[SRAM eTap / Di2 / EPS]
+        F <-.->|ANT+ HRM/BSC/BPWR| ANT_SENS[HR · Speed · Power]
+        F <-.->|ANT+ Custom| RADAR2[Varia · TyreWiz · Reverb]
+    end
+
+    subgraph GPIO_Direct ["Direct GPIO (latency-critical)"]
+        F --- BRK_L[Brake Switch Left]
+        F --- BRK_R[Brake Switch Right]
+        F --- HDLT[Headlight MOSFET]
+        F --- SPK[Speaker · PWM]
+        F --- MIC[MEMS Mic · PDM]
     end
 ```
 
