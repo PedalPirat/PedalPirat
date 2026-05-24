@@ -64,7 +64,10 @@ graph LR
     PP --> HW[pp-hardware<br/>KiCad PCB Designs]
     PP --> COMP[pp-Mecha_bikecomputer<br/>Bike Computer Software]
     PP --> CAN[pp-can-spec<br/>CAN Protocol Spec]
+    PP --> USB[pp-usb-spec<br/>USB Protocol Spec]
     PP --> ANT[pp-ant-profiles<br/>ANT+ Device Integration]
+    PP --> PLAN[pp-planning<br/>Planning & Research]
+    PP --> BRIDGE[pp-shift-bridge<br/>Standalone Shifter Bridge]
 
     PP -.-> RES[RES-ANT<br/>ANT+ Reference Docs]
     PP -.-> OA[openant<br/>Python ANT+ Library]
@@ -72,11 +75,14 @@ graph LR
 
 | Repository | Description |
 |---|---|
-| [`pp-firmware`](../pp-firmware/) | Zephyr RTOS firmware — apps, drivers, CAN library, light patterns |
+| [`pp-firmware`](../pp-firmware/) | Zephyr RTOS firmware — apps, drivers, CAN library, light patterns, autoshift gateway |
 | [`pp-hardware`](../pp-hardware/) | KiCad PCB designs — front controller, rear controller, moloko extensions |
 | [`pp-Mecha_bikecomputer`](../pp-Mecha_bikecomputer/) | Mecha Comet bike computer (pizero_bikecomputer fork + USB integration) |
 | [`pp-can-spec`](../pp-can-spec/) | CAN bus protocol specification — message IDs, DBC, docs |
+| [`pp-usb-spec`](../pp-usb-spec/) | USB CDC protocol — Front Controller ↔ Mecha Comet (composite: NMEA + binary) |
 | [`pp-ant-profiles`](../pp-ant-profiles/) | ANT+ device profiles — standard & reverse-engineered (SRAM, Reverb, Varia) |
+| [`pp-planning`](../pp-planning/) | Planning, research notes, outreach drafts, session logs |
+| [`pp-shift-bridge`](../pp-shift-bridge/) | Standalone ANT+ shifter → Rohloff E-14 / Pinion Smart.Shift bridge |
 | [`RES-ANT`](../RES-ANT/) | ANT+ reference material — official specs, SDKs, tools |
 | [`openant`](../openant/) | Python ANT+ library — USB stick testing & development |
 
@@ -84,7 +90,7 @@ graph LR
 
 | PCB | MCU | Key Features |
 |---|---|---|
-| Front Controller | nRF54L15 | Power mgmt, GPS, IMU, ANT+, headlight, heated grips (PWM), buttons, CAN master |
+| Front Controller | nRF54L15 | Power mgmt, GPS, IMU, ANT+, headlight, heated grips (PWM), buttons (MCP23017), CAN master, airspeed sensor |
 | Moloko Extension (x2) | — | Bar-end: turn signal LEDs, buttons, rotary encoder |
 | Rear Controller | nRF54L15 | Rear lights, brake, speed sensor, Rohloff (future) |
 | Powermeter Node | TBD | Bottom bracket torque sensor (future) |
@@ -108,8 +114,10 @@ graph LR
     end
 
     subgraph USB_Connections ["USB"]
-        F <-->|USB CDC/HID| COMET2[Mecha Comet]
+        F <-->|USB CDC ACM0<br/>NMEA GPS| COMET2[Mecha Comet]
+        F <-->|USB CDC ACM1<br/>PP Protocol| COMET2
         COMET2 <-->|USB-C| CAM2[AI Camera]
+        COMET2 -->|mcumgr DFU| F
     end
 ```
 
@@ -140,9 +148,9 @@ graph TD
 | Phase | Focus | Status |
 |---|---|---|
 | 1 | West workspace, CAN backbone, turn signals, ANT+ | 🚧 In Progress |
-| 2 | GPS, IMU, USB to Mecha Comet | Planned |
-| 3 | Rohloff shifting, SRAM AXS, dropper post | Future |
-| 4 | AI camera, auto-shifting, heated grips | Future |
+| 2 | GPS, IMU, USB to Mecha Comet, button clusters (MCP23017) | Planned |
+| 3 | Rohloff shifting, SRAM AXS, dropper post, autoshift | Future |
+| 4 | AI camera, bike lane violation reporting, heated grips | Future |
 
 ## License
 
