@@ -31,6 +31,7 @@ graph TD
         GPS[u-blox MAX-M10S] --- FRONT
         IMU[Bosch BHI385] --- FRONT
         HEADLIGHT[Headlight Controller<br/>MOSFET + Optocoupler] --- FRONT
+        WARMER[Heated Handlebar Tape<br/>PWM Control] --- FRONT
     end
 
     subgraph Seatstay
@@ -83,7 +84,7 @@ graph LR
 
 | PCB | MCU | Key Features |
 |---|---|---|
-| Front Controller | nRF54L15 | Power mgmt, GPS, IMU, ANT+, headlight, buttons, CAN master |
+| Front Controller | nRF54L15 | Power mgmt, GPS, IMU, ANT+, headlight, heated grips (PWM), buttons, CAN master |
 | Moloko Extension (x2) | — | Bar-end: turn signal LEDs, buttons, rotary encoder |
 | Rear Controller | nRF54L15 | Rear lights, brake, speed sensor, Rohloff (future) |
 | Powermeter Node | TBD | Bottom bracket torque sensor (future) |
