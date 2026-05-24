@@ -62,7 +62,7 @@ graph TD
 graph LR
     PP[PedalPirat<br/>Umbrella] --> FW[pp-firmware<br/>Zephyr Apps & Drivers]
     PP --> HW[pp-hardware<br/>KiCad PCB Designs]
-    PP --> COMP[pp-computer<br/>Bike Computer Software]
+    PP --> COMP[pp-Mecha_bikecomputer<br/>Bike Computer Software]
     PP --> CAN[pp-can-spec<br/>CAN Protocol Spec]
     PP --> ANT[pp-ant-profiles<br/>ANT+ Device Integration]
 
@@ -74,7 +74,7 @@ graph LR
 |---|---|
 | [`pp-firmware`](../pp-firmware/) | Zephyr RTOS firmware — apps, drivers, CAN library, light patterns |
 | [`pp-hardware`](../pp-hardware/) | KiCad PCB designs — front controller, rear controller, moloko extensions |
-| [`pp-computer`](../pp-computer/) | Mecha Comet bike computer (pizero_bikecomputer fork + USB integration) |
+| [`pp-Mecha_bikecomputer`](../pp-Mecha_bikecomputer/) | Mecha Comet bike computer (pizero_bikecomputer fork + USB integration) |
 | [`pp-can-spec`](../pp-can-spec/) | CAN bus protocol specification — message IDs, DBC, docs |
 | [`pp-ant-profiles`](../pp-ant-profiles/) | ANT+ device profiles — standard & reverse-engineered (SRAM, Reverb, Varia) |
 | [`RES-ANT`](../RES-ANT/) | ANT+ reference material — official specs, SDKs, tools |
