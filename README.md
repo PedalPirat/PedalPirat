@@ -1,53 +1,151 @@
 # PedalPirat
-Open Source Bike Plattform with ANT+, CAN, Bluetooth, AI Cameras and more to build the ultimative Smart Bike.
+
+Open Source Smart Bike Platform — ANT+, CAN, Zephyr RTOS, AI Cameras, and more.
+
 ![PedalPirat](PedalPiratController.drawio.png)
 
-## Goals
-- Replace proprietary batteries with a central Powerbank that can optionally be charged by a hub dynamo
-- Make stuff work together vendor-independent (Shimano levers with SRAM AXS anyone?)
-- Enhance Security with light control, Radars and Cameras using AI
-- Integrate E-Bike Technology for Bio-Bikes like the Rohloff E-14
-- Automate shifting and reporting cars that park on bike paths
-- Fun (Heated Handlebar Tape ftw!)
-- Data Fusion and Logging
+## Vision
 
-## Integrations (for now)
-- Rohloff E-14 (CAN)
-- Shimano GRX Di2 wired Levers (CAN/Contact?)
-- ANT+ (Quarq TyreWiz 2.0, Quarq DZero DUB, RockShox Reverb AXS, HR-Belt, maybe more?)
+Build the ultimate smart bike by replacing proprietary ecosystems with an open, modular platform that:
 
-## Custom Hardware
+- Replaces proprietary batteries with a central Forumslader dynamo-powered system
+- Mixes vendors freely (Shimano levers with SRAM AXS? Yes.)
+- Adds safety features: turn signals, brake lights, radar, AI cameras
+- Automates shifting (Rohloff E-14, Di2, SRAM AXS)
+- Fuses sensor data and logs everything
+- Heated handlebar tape, because why not
 
+## System Architecture
 
-### Main Controller / Extension for [Mecha Comet](https://developers.mecha.so/comet/extensions/io-breakout)
-- nRF54H20
-  - USB to connect with Comet
-  - CAN to connect with Rear MCU, Rohloff
-- u-blox MAX-M10S GPS
-- Bosch BHI385 IMU
+```mermaid
+graph TD
+    subgraph Power
+        DYN[Hub Dynamo] --> FL[Forumslader<br/>AC→5V/12V DC]
+    end
 
-### Rear-Controller
-- nRF54H20 with CAN to Front-Controller
-- Connect / Control Rohloff E-14
-- Connect to Bikone BB Torque Sensor
-- Connect to rearlight
-- 
-### Input
-- Brake Sensor Input
-- Turn Signals
-- Snapshot / Report
-- Shift Up/Down
-- Bike Computer Control
-- Other/Joystick
-### Turn Signals
-- Models
-  - Ergon-Endcap
-  - Surly Moloko Extension
-  - Rear Light
-- LIN-Based
+    subgraph Handlebar
+        FL --> FRONT[Front Controller<br/>nRF54L15 + MCP2515]
+        COMET[Mecha Comet<br/>Linux Bike Computer] <-->|USB| FRONT
+        MOLOKO_L[Moloko Extension L<br/>Turn LEDs + Buttons + Encoder] --- FRONT
+        MOLOKO_R[Moloko Extension R<br/>Turn LEDs + Buttons + Encoder] --- FRONT
+        GPS[u-blox MAX-M10S] --- FRONT
+        IMU[Bosch BHI385] --- FRONT
+        HEADLIGHT[Headlight Controller<br/>MOSFET + Optocoupler] --- FRONT
+    end
 
-### Light Controller (for [LiteMove RX-E90](https://www.lite-move.com/product/rx-e90-high-low-beam/))
-- Lumissil [IS32LT3183A](https://www.lumissil.com/applications/automotive/automotive-lighting/interior-lighting/ambient-lighting-&-footwell/is32lt3183a)
+    subgraph Seatstay
+        FRONT <-->|CAN + Power| REAR[Rear Controller<br/>nRF54L15 + MCP2515]
+        REAR --- REAR_LIGHTS[Rear Turn Signals + Brake]
+        REAR --- SPEED[Hall Speed Sensor]
+        REAR ---|CAN/UART| ROHLOFF[Rohloff E-14<br/>future]
+        REAR ---|UART/CAN| PM[Powermeter Node<br/>future]
+    end
+
+    subgraph Wireless["ANT+ Devices"]
+        FRONT -.->|ANT+| QUARQ[Quarq DZero Power]
+        FRONT -.->|ANT+| HR[HR Belt]
+        FRONT -.->|ANT+| VARIA[Garmin Varia Radar]
+        FRONT -.->|ANT+| TYRE[Quarq TyreWiz]
+        FRONT -.->|ANT+| SRAM[SRAM AXS Shifters]
+        FRONT -.->|ANT+| REVERB[RockShox Reverb AXS]
+    end
+
+    subgraph Future
+        COMET <-->|USB-C| CAM[E2IP Edge AI Camera<br/>STM32N657 + Sony 5MP + ToF]
+    end
+```
+
+## Repositories
+
+```mermaid
+graph LR
+    PP[PedalPirat<br/>Umbrella] --> FW[pp-firmware<br/>Zephyr Apps & Drivers]
+    PP --> HW[pp-hardware<br/>KiCad PCB Designs]
+    PP --> COMP[pp-computer<br/>Bike Computer Software]
+    PP --> CAN[pp-can-spec<br/>CAN Protocol Spec]
+    PP --> ANT[pp-ant-profiles<br/>ANT+ Device Integration]
+
+    PP -.-> RES[RES-ANT<br/>ANT+ Reference Docs]
+    PP -.-> OA[openant<br/>Python ANT+ Library]
+```
+
+| Repository | Description |
+|---|---|
+| [`pp-firmware`](../pp-firmware/) | Zephyr RTOS firmware — apps, drivers, CAN library, light patterns |
+| [`pp-hardware`](../pp-hardware/) | KiCad PCB designs — front controller, rear controller, moloko extensions |
+| [`pp-computer`](../pp-computer/) | Mecha Comet bike computer (pizero_bikecomputer fork + USB integration) |
+| [`pp-can-spec`](../pp-can-spec/) | CAN bus protocol specification — message IDs, DBC, docs |
+| [`pp-ant-profiles`](../pp-ant-profiles/) | ANT+ device profiles — standard & reverse-engineered (SRAM, Reverb, Varia) |
+| [`RES-ANT`](../RES-ANT/) | ANT+ reference material — official specs, SDKs, tools |
+| [`openant`](../openant/) | Python ANT+ library — USB stick testing & development |
+
+## Hardware Overview
+
+| PCB | MCU | Key Features |
+|---|---|---|
+| Front Controller | nRF54L15 | Power mgmt, GPS, IMU, ANT+, headlight, buttons, CAN master |
+| Moloko Extension (x2) | — | Bar-end: turn signal LEDs, buttons, rotary encoder |
+| Rear Controller | nRF54L15 | Rear lights, brake, speed sensor, Rohloff (future) |
+| Powermeter Node | TBD | Bottom bracket torque sensor (future) |
+
+## Communication Buses
+
+```mermaid
+graph LR
+    subgraph CAN_Bus ["CAN Bus (along frame)"]
+        direction LR
+        F[Front Controller] <-->|CAN_H / CAN_L| R[Rear Controller]
+        R <-->|CAN| ROH[Rohloff E-14]
+        R <-->|CAN/UART| PM[Powermeter]
+    end
+
+    subgraph I2C_Local ["I2C (local)"]
+        F --- LP_F[LP5036 Front LEDs]
+        F --- GPS2[MAX-M10S GPS]
+        F --- IMU2[BHI385 IMU]
+        R --- LP_R[LP5036 Rear LEDs]
+    end
+
+    subgraph USB_Connections ["USB"]
+        F <-->|USB CDC/HID| COMET2[Mecha Comet]
+        COMET2 <-->|USB-C| CAM2[AI Camera]
+    end
+```
+
+## Power Architecture
+
+```mermaid
+graph TD
+    DYN[Hub Dynamo AC] --> FL[Forumslader]
+    FL -->|5V| FRONT[Front Controller<br/>Power Hub]
+    FL -->|12V| FRONT
+    FRONT -->|Vcc via CAN cable| REAR[Rear Controller]
+    FRONT -->|USB power| COMET[Mecha Comet]
+    FRONT -->|Switched 12V| HL[Headlight]
+```
+
+## Development Stack
+
+- **RTOS:** Zephyr 4.x
+- **SDK:** nRF Connect SDK v3.2.4 + sdk-ant v2.1.0
+- **MCU:** Nordic nRF54L15 (future: nRF54H20 with native CAN)
+- **CAN:** MCP2515 via SPI (Zephyr `CONFIG_CAN_MCP2515`)
+- **ANT+:** Native on nRF54L15 — HRM, BSC, BPWR profiles
+- **Build:** West build system
+- **PCB:** KiCad
+
+## Roadmap
+
+| Phase | Focus | Status |
+|---|---|---|
+| 1 | West workspace, CAN backbone, turn signals, ANT+ | 🚧 In Progress |
+| 2 | GPS, IMU, USB to Mecha Comet | Planned |
+| 3 | Rohloff shifting, SRAM AXS, dropper post | Future |
+| 4 | AI camera, auto-shifting, heated grips | Future |
+
+## License
+
+TBD
 - Control High Beam
 - On/Off
 
